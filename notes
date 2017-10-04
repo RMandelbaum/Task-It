@@ -1,0 +1,11 @@
+MVC
+
+Parents have many babies
+Nannies have many babies
+Babies belong to parents and Nannies
+Nannies belong to Parents through babies
+NanniesBabies table?
+
+Nannies :name, :schedule, :rate
+Parents :name, :amount of children
+Babies :name, :age
