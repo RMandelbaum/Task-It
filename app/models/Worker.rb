@@ -1,13 +1,14 @@
 class Worker < ActiveRecord::Base
   belongs_to :boss
-  has_many :tasks, through: :boss
+  has_many :tasks #, through: :boss
+  has_many :worker_tasks
   has_secure_password
-  #validate username, presence: true
+  validates :username, presence: true
 
 
 
   def slug
-    name.downcase.gsub("","-")
+    username.downcase.gsub(" ","-")
   end
 
   def self.find_by_slug(slug)
