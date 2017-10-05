@@ -1,11 +1,76 @@
 MVC
 
-Parents have many babies
-Nannies have many babies
-Babies belong to parents and Nannies
-Nannies belong to Parents through babies
-NanniesBabies table?
+Sittercity like site
 
-Nannies :name, :schedule, :rate
-Parents :name, :amount of children
-Babies :name, :age
+Worker model :username, :email, :password_digest,
+
+Boss Model :username, :email, :password_digest, :task_id
+
+Task Model :description
+
+Worker_Tasks Model Joint Table
+
+Boss post task that Worker has to complete
+
+Boss has many tasks
+tasks belong to Boss
+Worker belong to Boss
+Boss has many Workers
+
+tasks belong to Worker through Boss
+Worker has many tasks through Boss
+
+Boss sign in and post tasks
+Worker signs in and cant edit or post tasks but can check complete
+task that Worker can sign in and view and check if completed
+
+home page
+click here to sign in as Boss
+    redirects to tasks
+    link to post new task
+    can edit task
+
+
+click her to sign in as Worker
+  redirects to all /tasks
+
+/tasks/Worker
+  views all tasks in checkbox
+  can click checkbox if complete
+  updates list with completed tasks
+
+/tasks/Boss/new
+  posts a task
+
+tasks/Boss/1/edit
+  edits a specific task
+
+tasks/Boss/1/delete
+
+
+Boss Table
+username  email              password  id
+Bob        bob@aol.com                  1
+Mary       mary@aol.com                 2
+Charlie    charlie@aol.com              3
+
+
+Worker Table
+username    email                password                id   boss_id
+Susan        susan@aol.com      crossword123              1     1 (Bob is boss)
+Rachel        rach@gmail.com    pants123                  2     1 (Bob is boss)
+Jen           jen@aol.com                                 3     2 (Mary is boss)
+
+Task Table
+
+description                   id  boss_id
+pick up laundry               1       1 (bob's task)
+feed kids                     2       1 (bobs' task)
+take kids to karate           3       2 (Mary's task)
+
+Worker_tasks table
+
+id     boss_id    worker_id
+1         1           1
+2         1           2
+3         2           2
