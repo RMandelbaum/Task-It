@@ -1,0 +1,9 @@
+<h1>Your Tasks</h1>
+<br>
+
+<%@tasks.each do |task|%>
+<%=task.content%><br>
+<%end%>
+<br>
+<a href ="/tasks/<%=@worker.slug%>/new">Create New Task</a>
+<a href ="/workers/<%=@worker.slug%>/logout">Log Out</a>

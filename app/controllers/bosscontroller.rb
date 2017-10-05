@@ -50,8 +50,11 @@ end
 
 
     get '/boss/:slug' do
+      if is_logged_in? #current_user.id = @boss.id
       @boss = Boss.find_by_slug(params[:slug])
-      if is_logged_in?  #current_user.id = @boss.id
+      @worker = Worker.all
+
+
 
       erb :"boss/index"
 

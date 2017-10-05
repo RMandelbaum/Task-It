@@ -1,2 +1,7 @@
-Displays all the names of workers
-Click on each workers which directs to a workers task page /workers/:id
+<h1>Your Employees</h1>
+
+<%@worker.each do |worker|%>
+<a href = "/tasks/<%=worker.slug%>"><%=worker.username%></a><br><br>
+<%end%>
+
+<a href ="/boss/<%=@boss.slug%>/logout">Log Out</a>

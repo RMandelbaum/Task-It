@@ -46,9 +46,10 @@ class WorkerController < ApplicationController
 
       get '/workers/:slug' do
         @worker = Worker.find_by_slug(params[:slug])
+        @tasks = Task.all
         if is_logged_in? #current_user.id = @boss.id
 
-        erb :"workers/show"
+        erb :"tasks/show"
 
       else
         redirect '/workers'
