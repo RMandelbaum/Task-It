@@ -74,3 +74,52 @@ id     boss_id    worker_id
 1         1           1
 2         1           2
 3         2           2
+------------------------------------------------------------------------------------
+www.taskit.com/signup
+www.taskit.com/login
+
+Check if Employer or Employee on signup form
+
+If click employee
+Assign worker id so when logs in
+If session[user.id]=worker.id ???
+
+(How to know if boss or worker sign in)
+
+Redirect to /tasks/:slug
+www.taskit.com/tasks/rmandelbaum
+List of all tasks
+
+/tasks/rlmandelbaum/edit
+Check or uncheck boxes
+
+If click employer
+Assign boss id so when logs in
+
+Redirect to
+www.taskit.com/boss-name/employees
+Shows index of all employees
+
+Each one can be clicked on which redirects to
+
+/tasks/:slug
+www.taskit.com/tasks/rmandelbaum
+Same page employees see
+Lists all the tasks
+
+Each task is linked to
+
+tasks/rmandelbaum/1
+tasks/:slug/:id
+
+Two buttons
+
+Edit
+Redirects to
+tasks/rlmandelbaum/1/edit
+
+Delete
+tasks/rlmandelbaum/1/delete
+Delete form in page
+Redirects to
+tasks/rlmandelbaum
