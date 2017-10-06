@@ -1,0 +1,19 @@
+<h1>Update A Task</h1>
+
+<h2>Edit</h2>
+<%=@task.content%>
+
+<form action = "/employers/<%=@employer.slug%>/employees/tasks" method = "post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <input type="text" name="content">
+  <input type="submit" value="Update">
+</form>
+<br>
+
+
+<h2>Delete</h2>
+<form action = "/employers/<%=@employer.slug%>/employees/tasks/<%=@task.id%>" method="post">
+  <%=@task.content%>
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" name="Delete" value="Delete">
+</form>

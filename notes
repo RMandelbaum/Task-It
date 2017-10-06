@@ -2,9 +2,12 @@ MVC
 
 Sittercity like site
 
-Worker model :username, :email, :password_digest,
+Employee model :username, :email, :password_digest,
 
-Boss Model :username, :email, :password_digest, :task_id
+Employer Model :username, :email, :password_digest, :task_id
+User Model :username, :email, :password_digest, :task_id, :employer
+
+
 
 Task Model :description
 

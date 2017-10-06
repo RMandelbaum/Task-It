@@ -1,0 +1,26 @@
+<!-- <h1><%=@employee.username%>'s Tasks</h1>
+<br>
+
+<%if current_user == @employer%>
+  <%@tasks.each do |task|%>
+  <a href = "/tasks/:id/<%=@employee.slug%>"><%=task.content%></a><br>
+  <%end%>
+<%else%>
+<form action ="/employees/<%=@employee.slug%>" method = "post">
+
+  <%@tasks.each do |task|%>
+    <input type="checkbox" name="content" value="<%=task.content%>"><%=task.content%>
+    <br>
+  <%end%>
+  <input type = "submit" value="submit">
+</form>
+<%end%>
+<br>
+
+<%if current_user == @employer%>
+<a href ="/tasks/<%=@employee.slug%>/new">Create New Task</a>
+<br>
+<a href ="/employers/<%=@employer.slug%>">List of Employees</a>
+<%end%>
+<br>
+<a href ="/employees/<%=@employee.slug%>/logout">Log Out</a> -->

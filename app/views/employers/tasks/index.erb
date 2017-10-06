@@ -1,7 +1,7 @@
 <h1>Your Employees</h1>
 
 <%@employee.each do |employee|%>
-<a href = "/tasks/<%=employee.slug%>"><%=employee.username%></a><br><br>
+<a href = "/employers/<%=@employer.slug%>/employees/tasks"><%=employee.username%></a><br><br>
 <%end%>
 
 <a href ="/employers/<%=@employer.slug%>/logout">Log Out</a>

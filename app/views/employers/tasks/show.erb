@@ -1,0 +1,11 @@
+<h3>
+<button><a href ="/employers/<%=@employer.slug%>/employees">List of Employees</a></button>
+<button><a href ="/employers/<%=@employer.slug%>/employees/tasks/new">Create New Task</a></button>
+<button><a href ="/employees/<%=@employee.slug%>/logout">Log Out</a></button>
+</h3>
+
+<h2><%=@employee.username.upcase%>'S TASKS</h2>
+  <ol><%@task.each do |task|%>
+  <li><a href = "/employers/<%=@employer.slug%>/employees/tasks/<%=task.id%>"><%=task.content%></a></li>
+  <%end%>
+</ol>

@@ -26,7 +26,7 @@ class EmployeeController < ApplicationController
 
       get '/employees/login' do
          @employee = Employee.find_by(params[:employees])
-         if is_logged_in?
+         if is_logged_in? && current_user == @employee
            redirect "/employees/#{@employee.slug}"
          else
         erb :"employees/login"
@@ -47,8 +47,9 @@ class EmployeeController < ApplicationController
 
       get '/employees/:slug' do
         @employee = Employee.find_by_slug(params[:slug])
+        @employer = Employer.find_by(params[:employer])
         @tasks = Task.all
-        if is_logged_in? #current_user.id = @boss.id
+        if is_logged_in? 
 
         erb :"tasks/show"
 
