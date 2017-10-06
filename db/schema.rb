@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005135651) do
+ActiveRecord::Schema.define(version: 20171005005751) do
 
-  create_table "bosses", force: :cascade do |t|
+  create_table "employees", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "password_digest"
+    t.integer "employer_id"
+  end
+
+  create_table "employers", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "password_digest"
@@ -20,19 +27,7 @@ ActiveRecord::Schema.define(version: 20171005135651) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "content"
-    t.integer "boss_id"
-  end
-
-  create_table "worker_tasks", force: :cascade do |t|
-    t.integer "task_id"
-    t.integer "worker_id"
-  end
-
-  create_table "workers", force: :cascade do |t|
-    t.string "username"
-    t.string "email"
-    t.string "password_digest"
-    t.integer "boss_id"
+    t.integer "employee_id"
   end
 
 end

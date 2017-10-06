@@ -28,7 +28,13 @@ class TaskController < ApplicationController
 
       end
 
-      delete '/tasks/:slug/delete' do
+      get '/tasks/:slug/:id' do
+    end
+
+    get '/tasks/:slug/:id/edit' do
+    end
+
+      delete '/tasks/:slug/:id/delete' do
 
       end
 end

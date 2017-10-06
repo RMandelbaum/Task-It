@@ -12,7 +12,7 @@ Worker_Tasks Model Joint Table
 
 Boss post task that Worker has to complete
 
-Boss has many tasks
+Worker has many tasks
 tasks belong to Boss
 Worker belong to Boss
 Boss has many Workers
@@ -63,10 +63,10 @@ Jen           jen@aol.com                                 3     2 (Mary is boss)
 
 Task Table
 
-description                   id  boss_id
-pick up laundry               1       1 (bob's task)
-feed kids                     2       1 (bobs' task)
-take kids to karate           3       2 (Mary's task)
+description                   id   worker_id
+pick up laundry               1       1 (susan's task)
+feed kids                     2       1 (susans' task)
+take kids to karate           3       2 (rachel's task)
 
 Worker_tasks table
 
@@ -75,51 +75,44 @@ id     boss_id    worker_id
 2         1           2
 3         2           2
 ------------------------------------------------------------------------------------
-www.taskit.com/signup
-www.taskit.com/login
+www.taskit.com
+Welcome page
+link to Employer or Employee
 
-Check if Employer or Employee on signup form
+www.taskit.com/employers
+link to sign up or login
 
-If click employee
-Assign worker id so when logs in
-If session[user.id]=worker.id ???
+www.taskit.com/employers/signup
+form to sign up
 
-(How to know if boss or worker sign in)
+www.taskit.com/employers/login
+form to login
 
-Redirect to /tasks/:slug
-www.taskit.com/tasks/rmandelbaum
-List of all tasks
+www.taskit.com/employers/boss-man/home
+index page of all employees that belong to employer
+each employee is a link that is directed to
 
-/tasks/rlmandelbaum/edit
-Check or uncheck boxes
+www.taskit.com/employers/boss-man/tasks/rachel-mandelbaum/new
+create new task for specific employee
+posts to www.taskit.com/tasks/rachel-mandelbaum
 
-If click employer
-Assign boss id so when logs in
+www.taskit.com/employers/boss-man/tasks/rachel-mandelbaum/1
 
-Redirect to
-www.taskit.com/boss-name/employees
-Shows index of all employees
+www.taskit.com/tasks/rachel-mandelbaum
+index page that lists all the tasks that belong to employee through the employer
 
-Each one can be clicked on which redirects to
+www.taskit.com/tasks/rachel-mandelbaum/edit
+edit the checklist of completed work
 
-/tasks/:slug
-www.taskit.com/tasks/rmandelbaum
-Same page employees see
-Lists all the tasks
-
-Each task is linked to
-
-tasks/rmandelbaum/1
-tasks/:slug/:id
-
-Two buttons
-
-Edit
-Redirects to
-tasks/rlmandelbaum/1/edit
-
-Delete
-tasks/rlmandelbaum/1/delete
-Delete form in page
-Redirects to
-tasks/rlmandelbaum
+---------------------------------------------------------------------------------------
+>> @employer = Employer.create(username: "jen", email: "jen@aol.com", password: "password")
+D, [2017-10-06T09:26:58.331597 #7073] DEBUG -- :    (0.1ms)  begin transaction
+D, [2017-10-06T09:26:58.332903 #7073] DEBUG -- :   SQL (0.3ms)  INSERT INTO "employers" ("username", "email", "password_digest") VALUES (?, ?, ?)  [["username", "jen"], ["email", "jen@aol.com"], ["password_digest", "$2a$10$9T5EChmHXndZmk0da5E71euLDfgTJchrWG03JgviCZbBjKv4buXGK"]]
+D, [2017-10-06T09:26:58.413318 #7073] DEBUG -- :    (79.7ms)  commit transaction
+=> #<Employer id: 1, username: "jen", email: "jen@aol.com", password_digest: "$2a$10$9T5EChmHXndZmk0da5E71euLDfgTJchrWG03JgviCZb...">
+>> @employee.employer
+=> nil
+>> @employee.employer = @employer
+=> #<Employer id: 1, username: "jen", email: "jen@aol.com", password_digest: "$2a$10$9T5EChmHXndZmk0da5E71euLDfgTJchrWG03JgviCZb...">
+>> @employee
+=> #<Employee id: 1, username: "rachel", email: "rachel@aol.com", password_digest: "$2a$10$Dnwosj0Wzg8ROb5y/0VpZOLcPDLLDhf4Koly11kPkpZ...", employer_id: 1>

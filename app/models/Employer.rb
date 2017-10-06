@@ -1,6 +1,5 @@
-class Boss < ActiveRecord::Base
-  has_many :workers
-  has_many :tasks
+class Employer < ActiveRecord::Base
+  has_many :employees
   has_secure_password
   validates :username, presence: true
 
@@ -10,7 +9,7 @@ def slug
 end
 
 def self.find_by_slug(slug)
-    Boss.all.find{|boss| boss.slug == slug}
+    Employer.all.find{|employer| employer.slug == slug}
 
 end
 end
