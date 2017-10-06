@@ -3,7 +3,7 @@ class Employee < ActiveRecord::Base
   has_many :tasks
   has_secure_password
   validates :username, presence: true
-
+  
 
 
   def slug

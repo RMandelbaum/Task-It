@@ -33,7 +33,8 @@ class EmployerController < ApplicationController
   end
 
   post '/employers/login' do
-      @employer = Employer.find_by(params[:employer])
+
+         @employer = Employer.find_by(username: params[:username])
          if @employer && @employer.authenticate(params[:password])
             session[:user_id] = @employer.id
             redirect "/employers/#{@employer.slug}/employees"
@@ -45,7 +46,7 @@ class EmployerController < ApplicationController
 
 
   get '/employers/:slug/logout' do
-      if is_logged_in?
+      if is_logged_in? && current_user.id == @employer.id
         session.clear
         redirect '/'
       end
@@ -53,10 +54,9 @@ class EmployerController < ApplicationController
   end
 
   get '/employers/:slug/employees' do
-      if is_logged_in?
-        @employer = Employer.find_by_slug(params[:slug])
-        @employee = Employee.all
-
+       if is_logged_in? #&& @employer.id == session[:user_id]
+         @employer = Employer.find_by_slug(params[:slug])
+         @employees = Employee.all
         erb :"employers/tasks/index"
 
       else
@@ -64,10 +64,20 @@ class EmployerController < ApplicationController
       end
    end
 
+   get '/employers/:slug/employees/tasks' do
+
+       @employer = Employer.find_by(params[:employer])
+       @employee = Employee.find_by(employer_id: params[:employer_id])
+       @task = Task.all
+
+       erb :"employers/tasks/show"
+   end
+
   get '/employers/:slug/employees/tasks/new' do
       @employee = Employee.find_by(params[:employee])
       @employer = Employer.find_by(params[:employer])
-      @task = Task.create(content: params[:content], employee_id: @employee.id)
+
+      #@task = Task.create(content: params[:content], employee_id: @employee.id)
 
       erb :"employers/tasks/new"
   end
@@ -81,13 +91,7 @@ class EmployerController < ApplicationController
 
   end
 
-  get '/employers/:slug/employees/tasks' do
-      @employer = Employer.find_by(params[:employer])
-      @employee = Employee.find_by(params[:employee])
-      @task = Task.all
 
-      erb :"employers/tasks/show"
-  end
 
   get '/employers/:slug/employees/tasks/:id' do
       @task = Task.find_by_id(params[:id])

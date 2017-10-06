@@ -8,16 +8,21 @@ class EmployeeController < ApplicationController
         end
 
         get '/employees/signup' do
-          @employees = Employee.all
+          @employers = Employer.all
 
           erb :"employees/signup"
 
         end
 
         post '/employees/signup' do
-          @employee = Employee.new(username: params[:username], email: params[:email], password: params[:password])
-          if @employee.save
-            session[:user_id] = @employee.id
+
+          @employer = Employer.all
+          @employee = Employee.new(username: params[:username], email: params[:email], password: params[:password], employer_id: params[:employer_id])
+        if @employee.save
+           session[:user_id] = @employee.id
+
+
+
             redirect to "/employees/#{@employee.slug}"
         else
           redirect to '/employees/signup'
@@ -49,9 +54,9 @@ class EmployeeController < ApplicationController
         @employee = Employee.find_by_slug(params[:slug])
         @employer = Employer.find_by(params[:employer])
         @tasks = Task.all
-        if is_logged_in? 
+        if is_logged_in?
 
-        erb :"tasks/show"
+        erb :"employees/tasks/show"
 
       else
         redirect '/employees'

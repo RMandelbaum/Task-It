@@ -4,5 +4,11 @@
   Username <input type="text" name="username">
   Email <input type="text" name="email">
   Password <input type="password" name="password">
+<br><br>
+  Select Employer<%@employers.each do |e|%>
+
+  <input type="checkbox" name="employer_id" value="<%=e.id%>">  <%=e.username.upcase%>
+  <%end%>
+
   <input type= "submit" value="submit">
 </form>
