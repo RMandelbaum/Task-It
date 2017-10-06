@@ -2,47 +2,48 @@ class EmployerController < ApplicationController
 
 
 
-    get '/boss' do
+    get '/employers' do
 
-      erb :"boss/home"
+      erb :"employers/home"
     end
 
-    get '/boss/signup' do
-      @boss = Boss.all
+    get '/employers/signup' do
+      @employer = Employer.all
 
-      erb :"boss/signup"
+      erb :"employers/signup"
 
     end
 
 
 
-    post '/boss/signup' do
-      @boss = Boss.new(username: params[:username], email: params[:email], password: params[:password])
-      if @boss.save
-        session[:user_id] = @boss.id
-        redirect to "/boss/#{@boss.slug}"
+    post '/employers/signup' do
+      @employer = Employer.new(username: params[:username], email: params[:email], password: params[:password])
+      if @employer.save
+        session[:user_id] = @employer.id
+
+        redirect to "/employers/#{@employer.slug}"
     else
-      redirect to '/boss/signup'
+      redirect to '/employers/signup'
     end
   end
 
-  get '/boss/login' do
-     @boss = Boss.find_by(session[:user_id])
+  get '/employers/login' do
+     @employer = Employer.find_by(params[:employer])
      if is_logged_in?
-       redirect "/boss/#{@boss.slug}"
+       redirect "/employers/#{@employer.slug}"
      else
-    erb :"boss/login"
+    erb :"employers/login"
    end
 
 end
 
-post '/boss/login' do
-  @boss = Boss.find_by(username:params[:username])
-  if @boss && @boss.authenticate(params[:password])
-    session[:user_id] = @boss.id
-    redirect "/boss/#{@boss.slug}"
+post '/employers/login' do
+  @employer = Employer.find_by(params[:employer])
+  if @employer && @employer.authenticate(params[:password])
+    session[:user_id] = @employer.id
+    redirect "/employers/#{@employer.slug}"
   else
-    redirect "/boss/login"
+    redirect "/employers/login"
   end
 
 end
@@ -50,22 +51,24 @@ end
 
 
 
-  get '/boss/:slug' do
-    if is_logged_in? #current_user.id = @boss.id
-    @boss = Boss.find_by_slug(params[:slug])
-    @worker = Worker.all
+  get '/employers/:slug' do
+    if is_logged_in? #current_user.id = @employer.id
+    @employer = Employer.find_by_slug(params[:slug])
+    @employee = Employee.all
 
 
 
-    erb :"boss/index"
+    erb :"employers/index"
 
   else
-    redirect '/boss'
+    redirect '/employers'
   end
   end
-  get '/boss/:slug/logout' do
+
+
+  get '/employers/:slug/logout' do
       if is_logged_in?
-        session[:user_id] = {}
+        session.clear
         redirect '/'
 
     end

@@ -5,5 +5,8 @@
 <%=task.content%><br>
 <%end%>
 <br>
-<a href ="/tasks/<%=@worker.slug%>/new">Create New Task</a>
-<a href ="/workers/<%=@worker.slug%>/logout">Log Out</a>
+
+<%if current_user = @employer%>
+<a href ="/tasks/<%=@employee.slug%>/new">Create New Task</a>
+<%end%>
+<a href ="/employees/<%=@employee.slug%>/logout">Log Out</a>
