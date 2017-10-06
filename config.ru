@@ -5,8 +5,8 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 use Rack::MethodOverride
-use WorkerController
-use BossController
+use EmployeeController
+use EmployerController
 use TaskController
 
 run ApplicationController
