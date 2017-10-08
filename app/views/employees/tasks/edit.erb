@@ -1,17 +1,22 @@
-<button><a href ="/employees/<%=@employee.slug%>/logout">Log Out</a></button>
 <h1><%=@employee.username%>'s Tasks</h1>
-<br>
+<%if @tasks.count == 0 %>
+<h2>You have 0 Tasks to Complete</h2>
+<%else%>
+<h2>You have <%=@tasks.count%> Task(s) to Complete</h2>
+<%end%>
 
+<%@tasks.each do |task|%>
 
-<form action ="/employees/<%=@employee.slug%>" method = "post">
-  <input id="hidden" type="hidden" name="_method" value="patch">
-  <%@tasks.each do |task|%>
+<form action ="/employees/<%=@employee.slug%>/tasks/<%=task.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
   <%if task.employee_id == @employee.id%>
 
-    <input type="checkbox" name="content" value="<%=task.content%>"><%=task.content%>
+    <input id="<%=task.id%>" type="checkbox" name="content" value= "<%=task.id%>"> <%=task.content%>
     <br>
   <%end%>
   <%end%>
   <br>
-  <input type = "submit" value="Complete">
+  <input type = "submit" value="Completed">
+
+<button><a href ="/employees/<%=@employee.slug%>/logout">Log Out</a></button>
 </form>
