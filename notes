@@ -119,3 +119,11 @@ D, [2017-10-06T09:26:58.413318 #7073] DEBUG -- :    (79.7ms)  commit transaction
 => #<Employer id: 1, username: "jen", email: "jen@aol.com", password_digest: "$2a$10$9T5EChmHXndZmk0da5E71euLDfgTJchrWG03JgviCZb...">
 >> @employee
 => #<Employee id: 1, username: "rachel", email: "rachel@aol.com", password_digest: "$2a$10$Dnwosj0Wzg8ROb5y/0VpZOLcPDLLDhf4Koly11kPkpZ...", employer_id: 1>
+-----------------------------------------------------------------------------------\
+On employee sign up, they have to choose who their boss is. The db can't figure that out
+I may have to just create one boss and a few workers, and each task will have foreign key connected to worker.
+-------------------------------------------------------------------------------
+
+Needs to be fixed:
+1. Update on employers doesn't match up
+2. How to update a checkbox???

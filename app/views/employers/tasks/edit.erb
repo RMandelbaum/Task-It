@@ -4,7 +4,7 @@
 
 <%=@task.content%>
 
-<form action = "/employers/<%=@employer.slug%>/employees/<%=@employee.username%>/tasks" method = "post">
+<form action = "/employers/<%=@employer.slug%>/employees/<%=@employee.username%>/tasks/<%=@task.id%>" method = "post">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <input type="text" name="content">
   <input type="submit" value="Update">

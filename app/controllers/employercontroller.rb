@@ -64,21 +64,24 @@ class EmployerController < ApplicationController
       end
    end
 
+   get '/employers/:slug/employees/:username/tasks/new' do
+       @employee = Employee.find_by(username: params[:username])
+       @employer = Employer.find_by_slug(params[:slug])
+
+       erb :"employers/tasks/new"
+   end
+
    get '/employers/:slug/employees/:username/tasks' do
 
        @employer = Employer.find_by_slug(params[:slug])
        @employee = Employee.find_by(username: params[:username])
+
        @task = @employee.tasks
 
        erb :"employers/tasks/show"
    end
 
-  get '/employers/:slug/employees/:username/tasks/new' do
-      @employee = Employee.find_by(username: params[:username])
-      @employer = Employer.find_by_slug(params[:slug])
 
-      erb :"employers/tasks/new"
-  end
 
   post '/employers/:slug/employees/:username/tasks' do
       @employee = Employee.find_by(username: params[:username])
@@ -98,17 +101,24 @@ class EmployerController < ApplicationController
       @employer = Employer.find_by_slug(params[:slug])
       @employee = Employee.find_by(username: params[:username])
 
+
       erb :"employers/tasks/edit"
   end
 
-  patch '/employers/:slug/employees/:username/tasks' do
+  patch '/employers/:slug/employees/:username/tasks/:id' do
       @employer = Employer.find_by_slug(params[:slug])
       @employee = Employee.find_by(username: params[:username])
-      @task = Task.find_by(params[:id])
+      #@task = @employee.tasks
+      @task = Task.find_by_id(params[:id])
+
+
+
+
       if params[:content].empty?
         redirect to "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks/#{@task.id}"
       else
       @task.update(content: params[:content])
+
 
       redirect to "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks"
   end
