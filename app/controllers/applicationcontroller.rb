@@ -11,6 +11,7 @@
 
     def current_user
       @employer = Employer.find_by_id(session[:user_id])
+      @employee = Employee.find_by_id(session[:user_id])
     end
 
     def is_logged_in?

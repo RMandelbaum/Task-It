@@ -1,0 +1,17 @@
+<button><a href ="/employees/<%=@employee.slug%>/logout">Log Out</a></button>
+<h1><%=@employee.username%>'s Tasks</h1>
+<br>
+
+
+<form action ="/employees/<%=@employee.slug%>" method = "post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <%@tasks.each do |task|%>
+  <%if task.employee_id == @employee.id%>
+
+    <input type="checkbox" name="content" value="<%=task.content%>"><%=task.content%>
+    <br>
+  <%end%>
+  <%end%>
+  <br>
+  <input type = "submit" value="Complete">
+</form>

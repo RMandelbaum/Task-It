@@ -4,6 +4,6 @@
 
 <%@employees.each do |employee|%>
 <%if employee.employer_id == @employer.id%>
-<a href = "/employers/<%=@employer.slug%>/employees/tasks"><%=employee.username%></a><br><br>
+<a href = "/employers/<%=@employer.slug%>/employees/<%=employee.username%>/tasks"><%=employee.username%></a><br><br>
 <%end%>
 <%end%>

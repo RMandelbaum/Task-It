@@ -14,8 +14,8 @@ class EmployerController < ApplicationController
   post '/employers/signup' do
       @employer = Employer.new(username: params[:username], email: params[:email], password: params[:password])
         if @employer.save
+          current_user = @employer
            session[:user_id] = @employer.id
-
            redirect to "/employers/#{@employer.slug}/employees"
         else
           redirect to '/employers/signup'
@@ -23,7 +23,6 @@ class EmployerController < ApplicationController
   end
 
   get '/employers/login' do
-      @employer = Employer.find_by(params[:employer])
         if is_logged_in?
           redirect "/employers/#{@employer.slug}/employees"
         else
@@ -46,7 +45,7 @@ class EmployerController < ApplicationController
 
 
   get '/employers/:slug/logout' do
-      if is_logged_in? && current_user.id == @employer.id
+      if is_logged_in?
         session.clear
         redirect '/'
       end
@@ -54,8 +53,9 @@ class EmployerController < ApplicationController
   end
 
   get '/employers/:slug/employees' do
-       if is_logged_in? #&& @employer.id == session[:user_id]
-         @employer = Employer.find_by_slug(params[:slug])
+       @employer = Employer.find_by_slug(params[:slug])
+
+        if is_logged_in? && @employer.id == session[:user_id]
          @employees = Employee.all
         erb :"employers/tasks/index"
 
@@ -64,59 +64,64 @@ class EmployerController < ApplicationController
       end
    end
 
-   get '/employers/:slug/employees/tasks' do
+   get '/employers/:slug/employees/:username/tasks' do
 
-       @employer = Employer.find_by(params[:employer])
-       @employee = Employee.find_by(employer_id: params[:employer_id])
-       @task = Task.all
+       @employer = Employer.find_by_slug(params[:slug])
+       @employee = Employee.find_by(username: params[:username])
+       @task = @employee.tasks
 
        erb :"employers/tasks/show"
    end
 
-  get '/employers/:slug/employees/tasks/new' do
-      @employee = Employee.find_by(params[:employee])
-      @employer = Employer.find_by(params[:employer])
-
-      #@task = Task.create(content: params[:content], employee_id: @employee.id)
+  get '/employers/:slug/employees/:username/tasks/new' do
+      @employee = Employee.find_by(username: params[:username])
+      @employer = Employer.find_by_slug(params[:slug])
 
       erb :"employers/tasks/new"
   end
 
-  post '/employers/:slug/employees/tasks' do
-      @employee = Employee.find_by(params[:employee])
-      @employer = Employer.find_by(params[:employer])
-      @task = Task.create(content: params[:content], employee_id: @employee.id)
-
-      redirect '/employers/:slug/employees/tasks'
+  post '/employers/:slug/employees/:username/tasks' do
+      @employee = Employee.find_by(username: params[:username])
+      @employer = Employer.find_by_slug(params[:slug])
+      @task = Task.new(content: params[:content], employee_id: @employee.id)
+      if @task.employee_id == @employee.id
+        @task.save
+      end
+      redirect "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks"
 
   end
 
 
 
-  get '/employers/:slug/employees/tasks/:id' do
+  get '/employers/:slug/employees/:username/tasks/:id' do
       @task = Task.find_by_id(params[:id])
-      @employer = Employer.find_by(params[:employer])
-      @employee = Employee.find_by(params[:employee])
+      @employer = Employer.find_by_slug(params[:slug])
+      @employee = Employee.find_by(username: params[:username])
 
       erb :"employers/tasks/edit"
   end
 
-  patch '/employers/:slug/employees/tasks' do
-      @task = Task.find_by(params[:task])
+  patch '/employers/:slug/employees/:username/tasks' do
+      @employer = Employer.find_by_slug(params[:slug])
+      @employee = Employee.find_by(username: params[:username])
+      @task = Task.find_by(params[:id])
+      if params[:content].empty?
+        redirect to "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks/#{@task.id}"
+      else
       @task.update(content: params[:content])
-      @employer = Employer.find_by(params[:employer])
-      @employee = Employee.find_by(params[:employee])
 
-      redirect to "/employers/#{@employer.slug}/employees/tasks"
+      redirect to "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks"
   end
+end
 
 
-  delete '/employers/:slug/employees/tasks/:id' do
+  delete '/employers/:slug/employees/:username/tasks/:id' do
+      @employer = Employer.find_by_slug(params[:slug])
+      @employee = Employee.find_by(username: params[:username])
       @task = Task.find_by_id(params[:id])
-      @employer = Employer.find_by(params[:employer])
+
       @task.delete
 
-      redirect to "/employers/#{@employer.slug}/employees/tasks"
+      redirect to "/employers/#{@employer.slug}/employees/#{@employee.username}/tasks"
   end
-
 end

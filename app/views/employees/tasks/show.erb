@@ -1,16 +1,13 @@
+<button><a href="/employees/<%=@employee.slug%>/edit">Complete Tasks</a></button>
+<button><a href ="/employees/<%=@employee.slug%>/logout">Log Out</a></button>
+
 <h1><%=@employee.username%>'s Tasks</h1>
 <br>
 
-
-<form action ="/employees/<%=@employee.slug%>" method = "post">
-
+<ol>
   <%@tasks.each do |task|%>
-    <input type="checkbox" name="content" value="<%=task.content%>"><%=task.content%>
-    <br>
+  <%if task.employee_id == @employee.id%>
+    <li><%=task.content%></li>
   <%end%>
-  <input type = "submit" value="submit">
-</form>
-
-
-<br>
-<a href ="/employees/<%=@employee.slug%>/logout">Log Out</a>
+  <%end%>
+</ol>
