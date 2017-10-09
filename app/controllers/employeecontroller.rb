@@ -64,11 +64,13 @@ class EmployeeController < ApplicationController
         end
 
 
-        delete '/employees/:slug/tasks/:id' do
+        delete '/employees/:slug/tasks' do
             @employee = current_user
-            @task = Task.find_by_id(params[:id])
-            params[:content]
-            @task.delete
+            @task = Task.find(params[:tasks_ids])
+            #params[:content]
+            @task.each do |task|
+              task.delete
+            end
 
             redirect "/employees/#{@employee.slug}/tasks"
 

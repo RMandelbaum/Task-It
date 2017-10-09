@@ -6,16 +6,14 @@
 <%end%>
 
 <%@tasks.each do |task|%>
-<%binding.pry%>
 
-<form action ="/employees/<%=@employee.slug%>/tasks/<%=task.id%>" method="post">
+<form action ="/employees/<%=@employee.slug%>/tasks" method="post">
 
   <input id="hidden" type="hidden" name="_method" value="delete">
   <%if task.employee_id == @employee.id%>
 
-    <input id="<%=task.id%>" type="checkbox" name="content" value= "<%=task.id%>"> <%=task.content%>
+    <input id="<%=task.id%>" type="checkbox" name="tasks_ids[]" value= "<%=task.id%>"> <%=task.content%>
     <br>
-    <%binding.pry%>
 
   <%end%>
   <%end%>
