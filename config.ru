@@ -7,6 +7,5 @@ end
 use Rack::MethodOverride
 use EmployeeController
 use EmployerController
-use TaskController
 
 run ApplicationController

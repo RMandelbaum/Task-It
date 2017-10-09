@@ -68,7 +68,6 @@ class EmployeeController < ApplicationController
             @employee = current_user
             @task = Task.find_by_id(params[:id])
             params[:content]
-            binding.pry
             @task.delete
 
             redirect "/employees/#{@employee.slug}/tasks"
